@@ -16,13 +16,13 @@ class BinarySearchTree:
     comes_before: Callable[[Any,Any],bool]
     bt: BinTree
 
-def comes_before(val1: Any, val2: Any) -> bool:
-    if type(val1) == str and type(val2) == str:
-        return val1 < val2
-    elif (type(val1) == float and type(val2) == float) or (type(val1) == int and type(val2) == int):
-        return val1 < val2
-    else:
-         raise ValueError("Input values must be the same type")
+# def comes_before(val1: Any, val2: Any) -> bool:
+#     if type(val1) == str and type(val2) == str:
+#         return val1 < val2
+#     elif (type(val1) == float and type(val2) == float) or (type(val1) == int and type(val2) == int):
+#         return val1 < val2
+#     else:
+#          raise ValueError("Input values must be the same type")
 
 def is_empty(tree : BinarySearchTree) -> bool:
     return tree.bt is None
@@ -47,6 +47,9 @@ def insert_helper(comes_before: Callable[[Any, Any], bool], bt: BinTree, val: An
             else:
                 return Node(v, l, insert_helper(comes_before, r, val))
                 
-                
-
-     
+class Tests(unittest.TestCase):
+    def test_example(self):
+        pass
+    
+if (__name__ == '__main__'):
+    unittest.main()
