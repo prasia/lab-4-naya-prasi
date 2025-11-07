@@ -8,7 +8,8 @@ BinTree: TypeAlias = Union["Node", None]
 @dataclass
 class Node:
     value: Any 
-    rest: BinTree
+    left: BinTree
+    right: BinTree
 
 @dataclass(frozen=True)
 class BinarySearchTree:
@@ -29,17 +30,23 @@ def is_empty(tree : BinarySearchTree) -> bool:
 def insert(tree: BinarySearchTree, val: Any) -> BinarySearchTree:
     # if is_empty(tree):
     #     raise ValueError("Provided an empty tree")
-    return_tree: BinarySearchTree
-    # if comes_before(val, tree.bt.value):
-    #     return_tree = (val, tree)
-    match tree:
-        case is_empty(tree):
-            raise ValueError("What the fuck")
+    # return_tree: BinarySearchTree
+    # # if comes_before(val, tree.bt.value):
+    # #     return_tree = (val, tree)
+    # match tree:
+    #     case is_empty(tree):
+    return BinarySearchTree(tree.comes_before, insert_helper(tree.comes_before, tree.bt, val))
 
 def insert_helper(comes_before: Callable[[Any, Any], bool], bt: BinTree, val: Any) -> BinTree:
-    if comes_before(val, bt.value):
-        return Node(val, bt)
-    else:
-        return Node(bt.value, insert_helper(comes_before, bt.rest, val))
+    match bt:
+        case None:
+            return Node(val, None, None)
+        case Node(v, l, r):
+            if comes_before(v, val):
+                return Node(v, insert_helper(comes_before, l, val), r)
+            else:
+                return Node(v, l, insert_helper(comes_before, r, val))
+                
+                
 
      
