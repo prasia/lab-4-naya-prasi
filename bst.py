@@ -91,8 +91,8 @@ def delete(tree: BinarySearchTree, val: Any) -> None:
                 
 class Tests(unittest.TestCase):
     def test_is_empty(self):
-        t1 : BinarySearchTree = BinarySearchTree(is_empty(), Node(4, Node(2, Node(1, None, None), Node(3, None, None)), Node(8,None, None)), Node(6, None, None))
-        t2: BinarySearchTree = BinarySearchTree(comes_before, None)
+        t1 : BinarySearchTree = BinarySearchTree(comes_before_int, Node(4, Node(2, Node(1, None, None), Node(3, None, None)), Node(8,None, None)))
+        t2: BinarySearchTree = BinarySearchTree(comes_before_str, None)
         self.assertFalse(is_empty(t1))
         self.assertTrue(is_empty(t2))
 
