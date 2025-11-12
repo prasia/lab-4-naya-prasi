@@ -66,10 +66,11 @@ def insert_helper(comes_before: Callable[[Any, Any], bool], bt: BinTree, val: An
             else:
                 return Node(v, l, insert_helper(comes_before, r, val))
 
+# returns whether a value is present within a BST
 def lookup(tree: BinarySearchTree, val: Any) -> bool:
     return lookup_helper(tree.comes_before, tree.bt, val)
     
-
+#halper method for lookup that returns whether a value is present within a BST
 def lookup_helper(comes_before: Callable[[Any, Any], bool], bt: BinTree, val:Any) -> bool:
     match bt:
         case None:
@@ -88,8 +89,34 @@ def lookup_helper(comes_before: Callable[[Any, Any], bool], bt: BinTree, val:Any
     
 #removes val from the tree if it is present and reorders it so it remains a proper BST 
 def delete(tree: BinarySearchTree, val: Any) -> None:
-    pass
+    if lookup(tree, val):
+        tree.bt = delete_helper(tree.comes_before, tree.bt, val)
+    
+#helper function to help delete
+def delete_helper(comes_before: Callable[[Any, Any], bool], bt: BinTree, val: Any) -> BinTree:
+    match bt:
+        case None:
+            return None
+        case Node(v, l, r):
+            if not comes_before(val, v) and not comes_before(v, val):
+                # case 1: node with only one or zero children
+                if l is None:
+                    return r
+                elif r is None:
+                    return l
+                # case 2: node with both children
+                
 
+#helper function to get smallest value(child) from right child of val
+def find_min(bt: BinTree) -> Any:
+    pass
+    # match bt:
+    #     case None:
+    #         return None
+    #     case Node(v, l, r):
+    #         if comes_before(r, v)
+                
+        
                 
 class Tests(unittest.TestCase):
     def test_is_empty(self):
