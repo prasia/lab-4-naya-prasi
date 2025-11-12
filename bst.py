@@ -73,16 +73,18 @@ def lookup(tree: BinarySearchTree, val: Any) -> bool:
 def lookup_helper(comes_before: Callable[[Any, Any], bool], bt: BinTree, val:Any) -> bool:
     match bt:
         case None:
-            raise ValueError("tree is empty, val not present")
+            # raise ValueError("tree is empty, val not present")
+            return False
         case Node(v, l, r):
             if (v == val):
                 return True
             else:
-                if comes_before(val, v):
-                    return lookup_helper(comes_before(val, l.value), l, val)
+                if comes_before(val, v) and not comes_before(v, val): # big val comes before current val
+                    return True
+                elif comes_before(val, v):
+                    return lookup_helper(comes_before, l, val)
                 else:
-                    return lookup_helper(comes_before(val, r.value), r, val)
-                return False
+                    return lookup_helper(comes_before, r, val)
     
 #removes val from the tree if it is present and reorders it so it remains a proper BST 
 def delete(tree: BinarySearchTree, val: Any) -> None:
