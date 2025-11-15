@@ -97,26 +97,44 @@ def delete_helper(comes_before: Callable[[Any, Any], bool], bt: BinTree, val: An
     match bt:
         case None:
             return None
+
         case Node(v, l, r):
-            if not comes_before(val, v) and not comes_before(v, val):
-                # case 1: node with only one or zero children
+            # Found node
+            if equal(comes_before, val, v):
+
+                # Case 1: no children
+                if l is None and r is None:
+                    return None
+
+                # Case 2: one child
                 if l is None:
                     return r
-                elif r is None:
+                if r is None:
                     return l
-                # case 2: node with both children
+
+                # Case 3: two children
+                min_val = find_min(r)
+                new_right = delete_helper(comes_before, r, min_val)
+                return Node(min_val, l, new_right)
+
+            # Recurse left or right
+            if comes_before(val, v):
+                return Node(v, delete_helper(comes_before, l, val), r)
+            else:
+                return Node(v, l, delete_helper(comes_before, r, val))
                 
 
 #helper function to get smallest value(child) from right child of val
 def find_min(bt: BinTree) -> Any:
-    pass
-    # match bt:
-    #     case None:
-    #         return None
-    #     case Node(v, l, r):
-    #         if comes_before(r, v)
-                
-        
+    match bt:
+        case None:
+            raise ValueError("find_min on empty tree")
+
+        case Node(v, None, _):
+            return v
+
+        case Node(_, l, _):
+            return find_min(l)
                 
 class Tests(unittest.TestCase):
     def test_is_empty(self):
@@ -124,8 +142,6 @@ class Tests(unittest.TestCase):
         t2: BinarySearchTree = BinarySearchTree(comes_before_str, None)
         self.assertFalse(is_empty(t1))
         self.assertTrue(is_empty(t2))
-
-        
     
 if (__name__ == '__main__'):
     unittest.main()
