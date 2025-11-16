@@ -8,6 +8,8 @@ import numpy as np
 import random
 sys.setrecursionlimit(10**6)
 from bst import *
+import time
+
 TREES_PER_RUN : int = 10000
 def example_graph_creation() -> None:
  # Return log-base-2 of 'x' + 5.
@@ -40,4 +42,15 @@ def random_tree(n: int) -> BinarySearchTree:
       insert(tree, r_val)
 
 if (__name__ == '__main__'):
- example_graph_creation()
+    # example_graph_creation()
+    i = 0
+    while i <= 5:
+        test_LL = i*1750000
+        start_time = time.perf_counter()
+        random_tree(test_LL)
+        end_time = time.perf_counter()
+        elapsed_time = end_time - start_time
+        #print(f"Iteration of range with {i*1000000} parameters took: {elapsed_time} seconds")
+        print(elapsed_time)
+        #print()
+        i += 1

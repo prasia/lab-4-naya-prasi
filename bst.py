@@ -63,10 +63,12 @@ def insert_helper(comes_before: Callable[[Any, Any], bool], bt: BinTree, val: An
         case None:
             return Node(val, None, None)
         case Node(v, l, r):
-            if comes_before(v, val):
+            if comes_before(val, v):
                 return Node(v, insert_helper(comes_before, l, val), r)
-            else:
+            elif comes_before(v, val):
                 return Node(v, l, insert_helper(comes_before, r, val))
+            else:
+                return bt
 
 # returns whether a value is present within a BST
 def lookup(tree: BinarySearchTree, val: Any) -> bool:
@@ -79,15 +81,15 @@ def lookup_helper(comes_before: Callable[[Any, Any], bool], bt: BinTree, val:Any
             # raise ValueError("tree is empty, val not present")
             return False
         case Node(v, l, r):
-            if (v == val):
+            # if (v == val):
+            #     return True
+            # else:
+            if not comes_before(val, v) and not comes_before(v, val): # val == v (they are equal under the comparator)
                 return True
+            elif comes_before(val, v):
+                return lookup_helper(comes_before, l, val)
             else:
-                if comes_before(val, v) and not comes_before(v, val): # big val comes before current val
-                    return True
-                elif comes_before(val, v):
-                    return lookup_helper(comes_before, l, val)
-                else:
-                    return lookup_helper(comes_before, r, val)
+                return lookup_helper(comes_before, r, val)
     
 #removes val from the tree if it is present and reorders it so it remains a proper BST 
 def delete(tree: BinarySearchTree, val: Any) -> BinarySearchTree:
@@ -104,10 +106,7 @@ def delete_helper(comes_before: Callable[[Any, Any], bool], bt: BinTree, val: An
 
         case Node(v, l, r):
             # Found node
-            if comes_before(val, v):
-                # Case 1: no children
-                if l is None and r is None:
-                    return None
+            if not comes_before(val, v) and not comes_before(v, val):
                 # Case 2: one child
                 if l is None:
                     return r
