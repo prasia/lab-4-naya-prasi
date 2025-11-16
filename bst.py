@@ -38,6 +38,9 @@ def comes_before_str(str1: str, str2: str) -> bool:
 #returns the distance between the origin and the point
 def euclidean_distance(point: Point2) -> float:
     return ((point.x)**2 +(point.y)**2) ** (1/2)
+#compares distance between points and returns whether one coems before the other
+def comes_before_point(p1: Point2, p2: Point2) -> bool:
+    return euclidean_distance(p1) < euclidean_distance(p2)
 
 # returns true if the binary tree in the BST is empty
 def is_empty(tree : BinarySearchTree) -> bool:
