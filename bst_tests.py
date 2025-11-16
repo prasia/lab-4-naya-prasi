@@ -6,7 +6,6 @@ sys.setrecursionlimit(10**6)
 from bst import *
 
 class BSTTests(unittest.TestCase):
-
     def test_comes_before_int(self):
         self.assertTrue(comes_before_int(1, 2))
         self.assertFalse(comes_before_int(5, 3))
@@ -21,7 +20,6 @@ class BSTTests(unittest.TestCase):
         p1 = Point2(3, 4)  
         p2 = Point2(6, 8)   
         p3 = Point2(0, 0)   
-
         self.assertTrue(comes_before_point(p3, p1))  
         self.assertTrue(comes_before_point(p1, p2))   
         self.assertFalse(comes_before_point(p2, p1))  
@@ -41,17 +39,14 @@ class BSTTests(unittest.TestCase):
     def test_insert_and_lookup_int(self):
         tree = BinarySearchTree(comes_before_int, None)
         values = [10, 5, 15, 3, 7]
-
         for n in values:
             tree = insert(tree, n)
-        
         self.assertFalse(lookup(tree, 9900))
 
     def test_delete_int(self):
         tree = BinarySearchTree(comes_before_int, None)
         for n in [10, 20, 30 , 500]:
             tree = insert(tree, n)
-
         self.assertTrue(lookup(tree, 10))
         tree = delete(tree, 10)
         self.assertFalse(lookup(tree, 10))
@@ -71,8 +66,5 @@ class BSTTests(unittest.TestCase):
             self.assertTrue(lookup(t, "a"))
         t = delete(t, "a")
         self.assertFalse(lookup(t, "a"))
-
-
-
 if (__name__ == '__main__'):
     unittest.main()
