@@ -66,5 +66,6 @@ class BSTTests(unittest.TestCase):
             self.assertTrue(lookup(t, "a"))
         t = delete(t, "a")
         self.assertFalse(lookup(t, "a"))
-if (__name__ == '__main__'):
+
+if __name__ == "__main__":
     unittest.main()
