@@ -30,5 +30,14 @@ def example_graph_creation() -> None:
     plt.grid(True)
     plt.legend() # makes the 'label's show up
     plt.show()
+
+#generates BinarySearchTree with n random floats in [0, 1]
+def random_tree(n: int) -> BinarySearchTree:
+   tree: BinarySearchTree = BinarySearchTree(comes_before_int, None)
+
+   for _ in range(n):
+      r_val = random.Random()
+      insert(tree, r_val)
+
 if (__name__ == '__main__'):
  example_graph_creation()

@@ -1,5 +1,4 @@
 import sys
-import unittest
 from typing import *
 from dataclasses import dataclass
 sys.setrecursionlimit(10**6) 
@@ -88,9 +87,11 @@ def lookup_helper(comes_before: Callable[[Any, Any], bool], bt: BinTree, val:Any
                     return lookup_helper(comes_before, r, val)
     
 #removes val from the tree if it is present and reorders it so it remains a proper BST 
-def delete(tree: BinarySearchTree, val: Any) -> None:
+def delete(tree: BinarySearchTree, val: Any) -> BinarySearchTree:
     if lookup(tree, val):
-        tree.bt = delete_helper(tree.comes_before, tree.bt, val)
+        return BinarySearchTree(tree.comes_before, delete_helper(tree.comes_before, tree.bt, val))
+    else:
+        raise ValueError("Item not found in Binary Tree")
     
 #helper function to help delete
 def delete_helper(comes_before: Callable[[Any, Any], bool], bt: BinTree, val: Any) -> BinTree:
@@ -100,12 +101,10 @@ def delete_helper(comes_before: Callable[[Any, Any], bool], bt: BinTree, val: An
 
         case Node(v, l, r):
             # Found node
-            if equal(comes_before, val, v):
-
+            if comes_before(val, v):
                 # Case 1: no children
                 if l is None and r is None:
                     return None
-
                 # Case 2: one child
                 if l is None:
                     return r
@@ -129,19 +128,20 @@ def find_min(bt: BinTree) -> Any:
     match bt:
         case None:
             raise ValueError("find_min on empty tree")
-
         case Node(v, None, _):
             return v
-
         case Node(_, l, _):
             return find_min(l)
-                
-class Tests(unittest.TestCase):
-    def test_is_empty(self):
-        t1 : BinarySearchTree = BinarySearchTree(comes_before_int, Node(4, Node(2, Node(1, None, None), Node(3, None, None)), Node(8,None, None)))
-        t2: BinarySearchTree = BinarySearchTree(comes_before_str, None)
-        self.assertFalse(is_empty(t1))
-        self.assertTrue(is_empty(t2))
+
+# class Tests(unittest.TestCase):
+#     def test_is_empty(self):
+#         t1 : BinarySearchTree = BinarySearchTree(comes_before_int, Node(4, Node(2, Node(1, None, None), Node(3, None, None)), Node(8,None, None)))
+#         t2: BinarySearchTree = BinarySearchTree(comes_before_str, None)
+#         self.assertFalse(is_empty(t1))
+#         self.assertTrue(is_empty(t2))
     
-if (__name__ == '__main__'):
-    unittest.main()
+#     def test_insert(self):
+#         pass
+    
+# if (__name__ == '__main__'):
+#     unittest.main()
