@@ -60,10 +60,18 @@ class BSTTests(unittest.TestCase):
         self.assertFalse(lookup(t,"pear"))
 
     def test_delete_str(self):
-        t = BinarySearchTree(comes_before_str, None)
-        for w in ["m", "a", "z"]:
-            t = insert(t, w)
-            self.assertTrue(lookup(t, "a"))
+        # t = BinarySearchTree(comes_before_str, None)
+        
+        # for w in ["m", "a", "z"]:
+        #     t = insert(t, w)
+        #     self.assertTrue(lookup(t, "a"))
+
+        t = BinarySearchTree(
+        comes_before_str,
+        Node("m", Node("a", None, None), Node("z", None, None))
+    )
+        self.assertTrue(lookup(t, "a"))
+
         t = delete(t, "a")
         self.assertFalse(lookup(t, "a"))
 

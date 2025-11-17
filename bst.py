@@ -107,6 +107,10 @@ def delete_helper(comes_before: Callable[[Any, Any], bool], bt: BinTree, val: An
         case Node(v, l, r):
             # Found node
             if not comes_before(val, v) and not comes_before(v, val):
+                # Case 1: No children
+                if l is None and r is None:
+                    return None
+
                 # Case 2: one child
                 if l is None:
                     return r
